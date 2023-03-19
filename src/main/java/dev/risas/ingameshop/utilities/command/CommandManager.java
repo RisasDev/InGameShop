@@ -23,11 +23,12 @@ public class CommandManager implements CommandExecutor {
 
     private final Map<String, Entry<Method, Object>> commandMap = new HashMap<>();
     private final JavaPlugin plugin;
-    private List<String> disableCommands;
+    private final List<String> disableCommands;
     private CommandMap map;
 
     public CommandManager(JavaPlugin plugin) {
         this.plugin = plugin;
+        this.disableCommands = new ArrayList<>();
 
         if (plugin.getServer().getPluginManager() instanceof SimplePluginManager) {
             SimplePluginManager manager = (SimplePluginManager) plugin.getServer().getPluginManager();

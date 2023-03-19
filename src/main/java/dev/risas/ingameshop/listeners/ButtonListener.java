@@ -25,7 +25,10 @@ public class ButtonListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         Menu menu = menuManager.getMenu(player);
 
+        System.out.println("click");
+
         if (menu != null) {
+            System.out.println("click2");
             event.setCancelled(menu.isCancelPlayerInventory());
 
             if (event.getSlot() != event.getRawSlot()) {
@@ -57,7 +60,8 @@ public class ButtonListener implements Listener {
                             menuManager.openMenu(player, newMenu);
                         }
                     }
-                } else if (button.shouldUpdate(player, event.getSlot(), event.getClick())) {
+                }
+                else if (button.shouldUpdate(player, event.getSlot(), event.getClick())) {
                     menu.setClosedByMenu(true);
                     menuManager.openMenu(player, menu);
                 }

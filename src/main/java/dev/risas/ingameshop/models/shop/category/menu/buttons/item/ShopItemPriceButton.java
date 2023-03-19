@@ -1,12 +1,14 @@
 package dev.risas.ingameshop.models.shop.category.menu.buttons.item;
 
 import com.cryptomorin.xseries.XMaterial;
+import dev.risas.ingameshop.InGameShop;
 import dev.risas.ingameshop.models.menu.button.Button;
 import dev.risas.ingameshop.models.shop.item.ShopCategoryItem;
-import dev.risas.ingameshop.models.shop.item.setting.ShopCategoryItemSetting;
-import dev.risas.ingameshop.models.shop.item.setting.ShopCategoryItemSettingType;
+import dev.risas.ingameshop.models.shop.item.prompt.ShopCategoryItemSellPricePrompt;
 import dev.risas.ingameshop.utilities.ChatUtil;
 import dev.risas.ingameshop.utilities.item.ItemBuilder;
+import org.bukkit.conversations.Conversation;
+import org.bukkit.conversations.Prompt;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -21,9 +23,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class ShopItemPriceButton extends Button {
 
+    private final InGameShop plugin;
     private final ShopCategoryItem shopCategoryItem;
 
-    public ShopItemPriceButton(ShopCategoryItem shopCategoryItem) {
+    public ShopItemPriceButton(InGameShop plugin, ShopCategoryItem shopCategoryItem) {
+        this.plugin = plugin;
         this.shopCategoryItem = shopCategoryItem;
     }
 
@@ -46,7 +50,8 @@ public class ShopItemPriceButton extends Button {
         if (clickType.isLeftClick()) {
             playSuccess(player);
 
-            ShopCategoryItemSetting.setShopCategoryItemSetting(ShopCategoryItemSettingType.BUY_PRICE, player, shopCategoryItem);
+
+            //ShopCategoryItemSellPricePrompt.setShopCategoryItemSetting(ShopCategoryItemSettingType.BUY_PRICE, player, shopCategoryItem);
 
             ChatUtil.sendMessage(player, new String[]{
                     "&bYou're now editing buy price of '&f" + ChatUtil.toReadable(shopCategoryItem.getItem()) + "&b'.",
@@ -58,7 +63,11 @@ public class ShopItemPriceButton extends Button {
         else if (clickType.isRightClick()) {
             playSuccess(player);
 
-            ShopCategoryItemSetting.setShopCategoryItemSetting(ShopCategoryItemSettingType.SELL_PRICE, player, shopCategoryItem);
+            Conversation conversation = plugin.getFactory()
+                    .withFirstPrompt(new ShopCategoryItemSellPricePrompt())
+                    .buildConversation(player);
+            conversation.begin();
+            //ShopCategoryItemSellPricePrompt.setShopCategoryItemSetting(ShopCategoryItemSettingType.SELL_PRICE, player, shopCategoryItem);
 
             ChatUtil.sendMessage(player, new String[]{
                     "&bYou're now editing sell price of '&f" + ChatUtil.toReadable(shopCategoryItem.getItem()) + "&b'.",

@@ -2,6 +2,7 @@ package dev.risas.ingameshop.models.shop.category.menu.buttons.item;
 
 import com.cryptomorin.xseries.XMaterial;
 import dev.risas.ingameshop.InGameShop;
+import dev.risas.ingameshop.models.menu.MenuManager;
 import dev.risas.ingameshop.models.menu.button.Button;
 import dev.risas.ingameshop.models.shop.category.menu.ShopCategoryItemSlotMenu;
 import dev.risas.ingameshop.models.shop.item.ShopCategoryItem;
@@ -22,10 +23,12 @@ public class ShopItemSlotButton extends Button {
 
     private final InGameShop plugin;
     private final ShopCategoryItem shopCategoryItem;
+    private final MenuManager menuManager;
 
     public ShopItemSlotButton(InGameShop plugin, ShopCategoryItem shopCategoryItem) {
         this.plugin = plugin;
         this.shopCategoryItem = shopCategoryItem;
+        this.menuManager = plugin.getMenuManager();
     }
 
     @Override
@@ -43,7 +46,6 @@ public class ShopItemSlotButton extends Button {
 
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
-        ShopCategoryItemSlotMenu shopCategoryItemSlotMenu = new ShopCategoryItemSlotMenu(plugin, shopCategoryItem);
-        shopCategoryItemSlotMenu.openMenu(player);
+        menuManager.openMenu(player, new ShopCategoryItemSlotMenu(plugin, shopCategoryItem));
     }
 }

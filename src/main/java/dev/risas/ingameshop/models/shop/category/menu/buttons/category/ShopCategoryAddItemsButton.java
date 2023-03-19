@@ -6,8 +6,6 @@ import dev.risas.ingameshop.models.menu.MenuManager;
 import dev.risas.ingameshop.models.menu.button.Button;
 import dev.risas.ingameshop.models.shop.category.ShopCategory;
 import dev.risas.ingameshop.models.shop.category.menu.ShopCategoryAddItemsMenu;
-import dev.risas.ingameshop.models.shop.category.setting.ShopCategorySetting;
-import dev.risas.ingameshop.models.shop.category.setting.ShopCategorySettingType;
 import dev.risas.ingameshop.utilities.item.ItemBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -46,6 +44,6 @@ public class ShopCategoryAddItemsButton extends Button {
         menuManager.openMenu(player, new ShopCategoryAddItemsMenu(shopCategory));
         playNeutral(player);
 
-        ShopCategorySetting.setShopCategorySetting(plugin, player, ShopCategorySettingType.ADD_ITEMS, shopCategory, false);
+        //ShopCategorySetting.setShopCategorySetting(plugin, player, ShopCategorySettingType.ADD_ITEMS, shopCategory, false);
     }
 }

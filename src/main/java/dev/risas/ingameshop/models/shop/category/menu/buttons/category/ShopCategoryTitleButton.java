@@ -4,8 +4,6 @@ import com.cryptomorin.xseries.XMaterial;
 import dev.risas.ingameshop.InGameShop;
 import dev.risas.ingameshop.models.menu.button.Button;
 import dev.risas.ingameshop.models.shop.category.ShopCategory;
-import dev.risas.ingameshop.models.shop.category.setting.ShopCategorySetting;
-import dev.risas.ingameshop.models.shop.category.setting.ShopCategorySettingType;
 import dev.risas.ingameshop.utilities.item.ItemBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -45,7 +43,7 @@ public class ShopCategoryTitleButton extends Button {
 
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
-        ShopCategorySetting.setShopCategorySetting(plugin, player, ShopCategorySettingType.TITLE, shopCategory, true);
+        //ShopCategorySetting.setShopCategorySetting(plugin, player, ShopCategorySettingType.TITLE, shopCategory, true);
 
         playSuccess(player);
         player.closeInventory();
