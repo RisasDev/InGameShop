@@ -1,0 +1,21 @@
+shop-menu:
+  title: "Shop Menu"
+  rows: 5
+
+categories:
+  weapons:
+    item:
+      name: "&b&lWeapons"
+      description:
+        - "&7A category for weapons"
+      material: "DIAMOND_SWORD"
+      data: 0
+      slot: 21
+  ores:
+    item:
+      name: "&b&lOres"
+      description:
+        - "&7A category for ores"
+      material: "DIAMOND_ORE"
+      data: 0
+      slot: 23

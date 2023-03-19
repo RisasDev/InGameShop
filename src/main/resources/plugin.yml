@@ -1,0 +1,5 @@
+main: dev.risas.ingameshop.InGameShop
+name: ${project.artifactId}
+version: ${project.version}
+api-version: 1.13
+author: Risas
