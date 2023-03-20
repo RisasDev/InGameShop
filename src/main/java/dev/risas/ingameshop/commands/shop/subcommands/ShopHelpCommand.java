@@ -20,7 +20,7 @@ public class ShopHelpCommand extends BaseCommand {
                 " &f<> &7= &fRequired &7| &f[] &7= &fOptional",
                 "",
                 " &7▶ &b/" + label + " category <category> &7- &fOpen a specific category.",
-                " &7▶ &b/" + label + " edit &7- &fOpen the shop edit menu.",
+                " &7▶ &b/" + label + " editor &7- &fOpen the shop editor menu.",
                 ChatUtil.NORMAL_LINE
         });
     }

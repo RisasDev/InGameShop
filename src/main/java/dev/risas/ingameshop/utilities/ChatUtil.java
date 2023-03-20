@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.conversations.Conversable;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -56,6 +57,11 @@ public class ChatUtil {
     public void sendMessage(CommandSender sender, String[] array) {
         if (array.length == 0) return;
         sender.sendMessage(translate(array));
+    }
+
+    public void sendRawMessage(Conversable conversable, String text) {
+        if (text.isEmpty()) return;
+        conversable.sendRawMessage(translate(text));
     }
 
     public String strip(String text) {

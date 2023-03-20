@@ -23,28 +23,10 @@ public class CommandManager implements CommandExecutor {
 
     private final Map<String, Entry<Method, Object>> commandMap = new HashMap<>();
     private final JavaPlugin plugin;
-    private final List<String> disableCommands;
     private CommandMap map;
 
     public CommandManager(JavaPlugin plugin) {
         this.plugin = plugin;
-        this.disableCommands = new ArrayList<>();
-
-        if (plugin.getServer().getPluginManager() instanceof SimplePluginManager) {
-            SimplePluginManager manager = (SimplePluginManager) plugin.getServer().getPluginManager();
-            try {
-                Field field = SimplePluginManager.class.getDeclaredField("commandMap");
-                field.setAccessible(true);
-                map = (CommandMap) field.get(manager);
-            } catch (IllegalArgumentException | SecurityException | NoSuchFieldException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public CommandManager(JavaPlugin plugin, List<String> disableCommands) {
-        this.plugin = plugin;
-        this.disableCommands = disableCommands;
 
         if (plugin.getServer().getPluginManager() instanceof SimplePluginManager) {
             SimplePluginManager manager = (SimplePluginManager) plugin.getServer().getPluginManager();
@@ -111,8 +93,6 @@ public class CommandManager implements CommandExecutor {
                     continue;
                 }
 
-                if (disableCommands.contains(command.name())) return;
-
                 registerCommand(command, command.name(), m, obj);
 
                 for (String alias : command.aliases()) {
@@ -132,11 +112,28 @@ public class CommandManager implements CommandExecutor {
                     continue;
                 }
 
-                if (disableCommands.contains(command.name())) return;
-
                 registerCommand(command, commandName, m, obj);
 
                 for (String alias : command.aliases()) {
+                    registerCommand(command, alias, m, obj);
+                }
+            }
+        }
+    }
+
+    public void registerCommands(BaseCommand obj, String commandName, List<String> aliases) {
+        for (Method m : obj.getClass().getMethods()) {
+            if (m.getAnnotation(Command.class) != null) {
+                Command command = m.getAnnotation(Command.class);
+
+                if (m.getParameterTypes().length > 1 || m.getParameterTypes()[0] != CommandArgs.class) {
+                    System.out.println("Unable to register command " + m.getName() + ". Unexpected method arguments");
+                    continue;
+                }
+
+                registerCommand(command, commandName, m, obj);
+
+                for (String alias : aliases) {
                     registerCommand(command, alias, m, obj);
                 }
             }

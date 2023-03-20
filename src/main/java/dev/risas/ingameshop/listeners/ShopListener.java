@@ -1,5 +1,14 @@
 package dev.risas.ingameshop.listeners;
 
+import dev.risas.ingameshop.InGameShop;
+import dev.risas.ingameshop.models.menu.MenuManager;
+import dev.risas.ingameshop.models.shop.category.ShopCategory;
+import dev.risas.ingameshop.models.shop.category.ShopCategoryManager;
+import dev.risas.ingameshop.models.shop.category.menu.ShopCategoryEditMenu;
+import dev.risas.ingameshop.models.shop.item.ShopCategoryItem;
+import dev.risas.ingameshop.models.shop.item.ShopCategoryItemManager;
+import dev.risas.ingameshop.utilities.ChatUtil;
+import dev.risas.ingameshop.utilities.TaskUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,14 +18,25 @@ import org.bukkit.inventory.ItemStack;
 
 public class ShopListener implements Listener {
 
+    private final InGameShop plugin;
+    private final ShopCategoryManager shopCategoryManager;
+    private final ShopCategoryItemManager shopCategoryItemManager;
+    private final MenuManager menuManager;
+
+    public ShopListener(InGameShop plugin) {
+        this.plugin = plugin;
+        this.shopCategoryManager = plugin.getShopCategoryManager();
+        this.shopCategoryItemManager = plugin.getShopCategoryItemManager();
+        this.menuManager = plugin.getMenuManager();
+    }
+
     @EventHandler
     private void onShopCategoryClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
 
         if (event.getInventory() != null) {
-            if (ShopCategorySetting.hasShopCategorySetting(player, ShopCategorySettingType.ADD_ITEMS)) {
-                ShopCategorySettingType type = ShopCategorySettingType.ADD_ITEMS;
-                ShopCategory shopCategory = ShopCategorySetting.getShopCategorySetting(player, type);
+            if (shopCategoryManager.hasEditor(player, "addItemsEditor")) {
+                ShopCategory shopCategory = shopCategoryManager.getEditor(player);
 
                 if (shopCategory != null) {
                     Inventory inventory = event.getInventory();
@@ -36,12 +56,9 @@ public class ShopListener implements Listener {
                     ChatUtil.sendMessage(player, "&aYou have successfully edited the category!");
                 }
 
-                ShopCategorySetting.removeShopCategorySetting(player, type);
+                shopCategoryManager.removeEditor(player, "addItemsEditor");
 
-                TaskUtil.runLater(plugin, () -> {
-                    ShopCategoryEditMenu shopCategoryEditMenu = new ShopCategoryEditMenu(plugin, shopCategory);
-                    shopCategoryEditMenu.openMenu(player);
-                }, 1L);
+                TaskUtil.runLater(plugin, () -> menuManager.openMenu(player, new ShopCategoryEditMenu(plugin, shopCategory)), 1L);
             }
         }
     }

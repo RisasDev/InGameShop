@@ -38,7 +38,7 @@ public class ItemBuilder {
         Optional<XMaterial> xMaterial = XMaterial.matchXMaterial(materialName);
 
         if (!xMaterial.isPresent()) {
-            ChatUtil.logger("&c[Neron] Invalid material: " + materialName + ", using STONE instead.");
+            ChatUtil.logger("&c[InGameShop] Invalid material: " + materialName + ", using STONE instead.");
             this.itemStack = new ItemStack(XMaterial.STONE.parseMaterial());
             this.itemMeta = itemStack.getItemMeta();
             return;

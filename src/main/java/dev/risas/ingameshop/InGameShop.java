@@ -3,9 +3,10 @@ package dev.risas.ingameshop;
 import dev.risas.ingameshop.commands.InGameShopCommand;
 import dev.risas.ingameshop.commands.shop.ShopCommand;
 import dev.risas.ingameshop.commands.shop.subcommands.ShopCategoryCommand;
-import dev.risas.ingameshop.commands.shop.subcommands.ShopEditCommand;
+import dev.risas.ingameshop.commands.shop.subcommands.ShopEditorCommand;
 import dev.risas.ingameshop.commands.shop.subcommands.ShopHelpCommand;
 import dev.risas.ingameshop.listeners.ButtonListener;
+import dev.risas.ingameshop.listeners.ShopListener;
 import dev.risas.ingameshop.models.economy.EconomyManager;
 import dev.risas.ingameshop.models.menu.MenuManager;
 import dev.risas.ingameshop.models.shop.category.ShopCategoryManager;
@@ -15,6 +16,7 @@ import dev.risas.ingameshop.utilities.file.FileConfig;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.conversations.ConversationFactory;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter
@@ -43,12 +45,16 @@ public class InGameShop extends JavaPlugin {
         this.factory = new ConversationFactory(this);
 
         commandManager.registerCommands(new InGameShopCommand(this));
-        commandManager.registerCommands(new ShopCommand(this));
+        commandManager.registerCommands(new ShopCommand(this),
+                configFile.getString("shop-command.name"),
+                configFile.getStringList("shop-command.aliases"));
         commandManager.registerCommands(new ShopCategoryCommand(this));
-        commandManager.registerCommands(new ShopEditCommand(this));
+        commandManager.registerCommands(new ShopEditorCommand(this));
         commandManager.registerCommands(new ShopHelpCommand());
 
-        Bukkit.getPluginManager().registerEvents(new ButtonListener(this), this);
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new ButtonListener(this), this);
+        pluginManager.registerEvents(new ShopListener(this), this);
     }
 
     public void onReload() {

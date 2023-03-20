@@ -36,7 +36,6 @@ public class InGameShopCommand extends BaseCommand {
                     "&b&lInGameShop Commands",
                     "",
                     " &7▶ &b/" + label + " reload &7- &fReload the plugin.",
-                    " &7▶ &b/neron reset &7- &fReset the storage data.",
                     ChatUtil.NORMAL_LINE
             });
             return;
@@ -44,7 +43,7 @@ public class InGameShopCommand extends BaseCommand {
 
         if (args[0].equalsIgnoreCase("reload")) {
             plugin.onReload();
-            ChatUtil.sendMessage(sender, "&aNeron has been reloaded!");
+            ChatUtil.sendMessage(sender, "&a" + plugin.getName() + " has been reloaded!");
         }
     }
 }

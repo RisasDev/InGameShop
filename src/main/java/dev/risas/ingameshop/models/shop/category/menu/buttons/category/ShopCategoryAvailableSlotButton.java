@@ -38,6 +38,7 @@ public class ShopCategoryAvailableSlotButton extends Button {
     public ItemStack getButtonItem(Player player) {
         return new ItemBuilder(XMaterial.LIME_STAINED_GLASS_PANE.parseMaterial())
                 .setName("&aAvailable Slot")
+                .setData(XMaterial.LIME_STAINED_GLASS_PANE.getData())
                 .build();
     }
 

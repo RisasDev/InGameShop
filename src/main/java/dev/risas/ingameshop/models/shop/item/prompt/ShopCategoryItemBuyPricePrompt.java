@@ -23,12 +23,12 @@ import java.util.Map;
  * GitHub: https://github.com/RisasDev
  */
 
-public class ShopCategoryItemSellPricePrompt extends StringPrompt {
+public class ShopCategoryItemBuyPricePrompt extends StringPrompt {
 
     private final InGameShop plugin;
     private final MenuManager menuManager;
 
-    public ShopCategoryItemSellPricePrompt(InGameShop plugin) {
+    public ShopCategoryItemBuyPricePrompt(InGameShop plugin) {
         this.plugin = plugin;
         this.menuManager = plugin.getMenuManager();
     }
@@ -59,16 +59,16 @@ public class ShopCategoryItemSellPricePrompt extends StringPrompt {
             return this;
         }
 
-        shopCategoryItem.setSellPrice(newPrice);
+        shopCategoryItem.setBuyPrice(newPrice);
         shopCategoryItem.save();
 
-        ChatUtil.sendRawMessage(conversable, "&aYou have successfully changed the sell price of the item to &6$" + newPrice + "&a.");
+        ChatUtil.sendRawMessage(conversable, "&aYou have successfully changed the buy price of the item to &6$" + newPrice + "&a.");
         TaskUtil.runLater(plugin, () -> menuManager.openMenu(player, new ShopCategoryItemEditMenu(plugin, shopCategoryItem)), 1L);
         return END_OF_CONVERSATION;
     }
 
     @Override
     public String getPromptText(ConversationContext context) {
-        return ChatUtil.translate("&aPlease enter the new sell price, or type '&ccancel&a' to cancel the process.");
+        return ChatUtil.translate("&aPlease enter the new buy price, or type '&ccancel&a' to cancel the process.");
     }
 }

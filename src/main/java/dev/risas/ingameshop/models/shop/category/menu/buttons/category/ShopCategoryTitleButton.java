@@ -4,10 +4,15 @@ import com.cryptomorin.xseries.XMaterial;
 import dev.risas.ingameshop.InGameShop;
 import dev.risas.ingameshop.models.menu.button.Button;
 import dev.risas.ingameshop.models.shop.category.ShopCategory;
+import dev.risas.ingameshop.models.shop.category.prompt.ShopCategoryTitlePrompt;
+import dev.risas.ingameshop.utilities.PromptUtil;
 import dev.risas.ingameshop.utilities.item.ItemBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Risas
@@ -43,7 +48,15 @@ public class ShopCategoryTitleButton extends Button {
 
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
-        //ShopCategorySetting.setShopCategorySetting(plugin, player, ShopCategorySettingType.TITLE, shopCategory, true);
+        Map<Object, Object> sessionData = new HashMap<>();
+        sessionData.put("shopCategory", shopCategory);
+
+        PromptUtil.createPrompt(
+                plugin,
+                player,
+                new ShopCategoryTitlePrompt(plugin),
+                sessionData
+        );
 
         playSuccess(player);
         player.closeInventory();

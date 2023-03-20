@@ -33,6 +33,7 @@ public class ShopCategoryItemEditMenu extends Menu {
         this.shopCategoryItem = shopCategoryItem;
         this.placeholder = Button.placeholder(new ItemBuilder(XMaterial.GRAY_STAINED_GLASS_PANE.parseMaterial())
                 .setName(" ")
+                .setData(XMaterial.GRAY_STAINED_GLASS_PANE.getData())
                 .build());
     }
 

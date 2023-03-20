@@ -7,17 +7,17 @@ import dev.risas.ingameshop.utilities.command.BaseCommand;
 import dev.risas.ingameshop.utilities.command.Command;
 import dev.risas.ingameshop.utilities.command.CommandArgs;
 
-public class ShopEditCommand extends BaseCommand {
+public class ShopEditorCommand extends BaseCommand {
 
     private final InGameShop plugin;
     private final MenuManager menuManager;
 
-    public ShopEditCommand(InGameShop plugin) {
+    public ShopEditorCommand(InGameShop plugin) {
         this.plugin = plugin;
         this.menuManager = plugin.getMenuManager();
     }
 
-    @Command(name = "shop.edit", permission = "ingameshop.command.shop.edit")
+    @Command(name = "shop.editor", permission = "ingameshop.command.shop.editor")
     @Override
     public void onCommand(CommandArgs command) {
         menuManager.openMenu(command.getPlayer(), new ShopCategoriesEditMenu(plugin));

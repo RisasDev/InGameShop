@@ -4,14 +4,16 @@ import com.cryptomorin.xseries.XMaterial;
 import dev.risas.ingameshop.InGameShop;
 import dev.risas.ingameshop.models.menu.button.Button;
 import dev.risas.ingameshop.models.shop.item.ShopCategoryItem;
+import dev.risas.ingameshop.models.shop.item.prompt.ShopCategoryItemBuyPricePrompt;
 import dev.risas.ingameshop.models.shop.item.prompt.ShopCategoryItemSellPricePrompt;
-import dev.risas.ingameshop.utilities.ChatUtil;
+import dev.risas.ingameshop.utilities.PromptUtil;
 import dev.risas.ingameshop.utilities.item.ItemBuilder;
-import org.bukkit.conversations.Conversation;
-import org.bukkit.conversations.Prompt;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Risas
@@ -47,34 +49,18 @@ public class ShopItemPriceButton extends Button {
 
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
-        if (clickType.isLeftClick()) {
-            playSuccess(player);
+        if (!clickType.isLeftClick() && !clickType.isRightClick()) return;
 
+        Map<Object, Object> sessionData = new HashMap<>();
+        sessionData.put("shopCategoryItem", shopCategoryItem);
 
-            //ShopCategoryItemSellPricePrompt.setShopCategoryItemSetting(ShopCategoryItemSettingType.BUY_PRICE, player, shopCategoryItem);
+        PromptUtil.createPrompt(
+                plugin,
+                player,
+                clickType.isLeftClick() ? new ShopCategoryItemBuyPricePrompt(plugin) : new ShopCategoryItemSellPricePrompt(plugin),
+                sessionData
+        );
 
-            ChatUtil.sendMessage(player, new String[]{
-                    "&bYou're now editing buy price of '&f" + ChatUtil.toReadable(shopCategoryItem.getItem()) + "&b'.",
-                    "&bType '&ccancel&b' in the chat to cancel the process."
-            });
-
-            player.closeInventory();
-        }
-        else if (clickType.isRightClick()) {
-            playSuccess(player);
-
-            Conversation conversation = plugin.getFactory()
-                    .withFirstPrompt(new ShopCategoryItemSellPricePrompt())
-                    .buildConversation(player);
-            conversation.begin();
-            //ShopCategoryItemSellPricePrompt.setShopCategoryItemSetting(ShopCategoryItemSettingType.SELL_PRICE, player, shopCategoryItem);
-
-            ChatUtil.sendMessage(player, new String[]{
-                    "&bYou're now editing sell price of '&f" + ChatUtil.toReadable(shopCategoryItem.getItem()) + "&b'.",
-                    "&bType '&ccancel&b' in the chat to cancel the process."
-            });
-
-            player.closeInventory();
-        }
+        player.closeInventory();
     }
 }
