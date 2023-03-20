@@ -33,6 +33,8 @@ public class MenuManager {
     }
 
     public void openMenu(Player player, Menu menu) {
+        menu.setButtons(menu.getButtons(player));
+
         Map<Integer, Button> buttons = menu.getButtons(player);
 
         Menu previousMenu = this.getMenu(player);

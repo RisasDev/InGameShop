@@ -28,9 +28,6 @@ public class ShopButton extends Button {
 
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
-        System.out.println("Clicked shop button");
-
-        ShopCategoryMenu menu = new ShopCategoryMenu(plugin, shopCategory);
-        menuManager.openMenu(player, menu);
+        menuManager.openMenu(player, new ShopCategoryMenu(plugin, shopCategory));
     }
 }

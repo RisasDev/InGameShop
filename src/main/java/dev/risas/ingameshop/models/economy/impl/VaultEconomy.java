@@ -32,6 +32,7 @@ public class VaultEconomy implements IEconomy {
 
 
         this.economy = rsp.getProvider();
+        ChatUtil.logger("&aEconomy system hook with Vault found. (" + rsp.getProvider().getName() + ")");
     }
 
     @Override
