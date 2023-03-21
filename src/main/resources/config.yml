@@ -4,6 +4,3 @@ economy: "Vault"
 # Here you can modify default shop command
 shop-command:
   name: "shop"
-  aliases:
-    - "myshop"
-    - "blockshop"

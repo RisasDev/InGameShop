@@ -23,7 +23,7 @@ public class ShopCategoryCommand extends BaseCommand {
         this.menuManager = plugin.getMenuManager();
     }
 
-    @Command(name = "shop.category", permission = "ingameshop.command.shop.category")
+    @Command(permission = "ingameshop.command.shop.category")
     @Override
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();

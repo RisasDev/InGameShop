@@ -44,13 +44,13 @@ public class InGameShop extends JavaPlugin {
         this.shopCategoryManager = new ShopCategoryManager(this);
         this.factory = new ConversationFactory(this);
 
+        String shopName = configFile.getString("shop-command.name");
+
         commandManager.registerCommands(new InGameShopCommand(this));
-        commandManager.registerCommands(new ShopCommand(this),
-                configFile.getString("shop-command.name"),
-                configFile.getStringList("shop-command.aliases"));
-        commandManager.registerCommands(new ShopCategoryCommand(this));
-        commandManager.registerCommands(new ShopEditorCommand(this));
-        commandManager.registerCommands(new ShopHelpCommand());
+        commandManager.registerCommands(new ShopCommand(this), shopName);
+        commandManager.registerCommands(new ShopCategoryCommand(this), shopName + ".category");
+        commandManager.registerCommands(new ShopEditorCommand(this), shopName + ".editor");
+        commandManager.registerCommands(new ShopHelpCommand(), shopName + ".help");
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ButtonListener(this), this);

@@ -7,7 +7,7 @@ import dev.risas.ingameshop.utilities.command.CommandArgs;
 
 public class ShopHelpCommand extends BaseCommand {
 
-    @Command(name = "shop.help", permission = "ingameshop.command.shop.help", inGameOnly = false)
+    @Command(permission = "ingameshop.command.shop.help", inGameOnly = false)
     @Override
     public void onCommand(CommandArgs command) {
         String label = command.getLabel().

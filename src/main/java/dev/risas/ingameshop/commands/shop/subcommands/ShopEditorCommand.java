@@ -17,7 +17,7 @@ public class ShopEditorCommand extends BaseCommand {
         this.menuManager = plugin.getMenuManager();
     }
 
-    @Command(name = "shop.editor", permission = "ingameshop.command.shop.editor")
+    @Command(permission = "ingameshop.command.shop.editor")
     @Override
     public void onCommand(CommandArgs command) {
         menuManager.openMenu(command.getPlayer(), new ShopCategoriesEditMenu(plugin));

@@ -17,7 +17,7 @@ public class ShopCommand extends BaseCommand {
         this.menuManager = plugin.getMenuManager();
     }
 
-    @Command(name = "shop")
+    @Command()
     @Override
     public void onCommand(CommandArgs command) {
         menuManager.openMenu(command.getPlayer(), new ShopMenu(plugin));
