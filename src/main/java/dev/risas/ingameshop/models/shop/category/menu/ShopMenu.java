@@ -24,12 +24,12 @@ public class ShopMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        return ChatUtil.translate(plugin.getConfigFile().getString("shop-menu.title"));
+        return ChatUtil.translate(plugin.getShopFile().getString("shop-menu.title"));
     }
 
     @Override
     public int getSize() {
-        return 9 * plugin.getConfigFile().getInt("shop-menu.rows");
+        return 9 * plugin.getShopFile().getInt("shop-menu.rows");
     }
 
     @Override
